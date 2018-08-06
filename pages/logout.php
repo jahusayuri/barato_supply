@@ -8,7 +8,8 @@ if (ini_get("session.use_cookies")) {
         $params["secure"], $params["httponly"]
     );
 }
-
+$_SESSION['id'] = null;
+$_SESSION['login_user'] = null;
 session_destroy();
 header("Refresh:2; url=../index.php");
 

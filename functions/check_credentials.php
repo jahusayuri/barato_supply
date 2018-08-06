@@ -30,8 +30,11 @@ function user_login($conn, $pnumber, $password){
 	$result = $conn->query($sql);
 
 	//Give session
-	if($result->num_rows){
-		$_SESSION['login_user'] = $pnumber;
+	if($result->num_rows){		
+		//Get the ID
+		$row = $result->fetch_assoc();
+		$_SESSION['login_user'] = $pnumber;		
+		$_SESSION['id'] = $row['id'];
 		echo "Login Success! Redirecting...";
 		header("Refresh:5; url=../pages/home.php");
 	}else{
@@ -49,7 +52,10 @@ function admin_login($conn, $username, $password){
 
 	//Give session
 	if($result->num_rows){
+		//Get the ID
+		$row = $result->fetch_assoc();
 		$_SESSION['login_user'] = $username;
+		$_SESSION['id'] = $row['id'];
 		echo "Login Success! Redirecting...";
 		header("Refresh:5; url=../pages/home.php");
 	}else{
