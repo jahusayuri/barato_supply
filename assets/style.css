@@ -1,0 +1,33 @@
+DIV.table 
+{
+    display:table;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+FORM.tr, DIV.tr
+{
+    display:table-row;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+SPAN.td
+{
+    display:table-cell;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+SPAN.th
+{
+    display:table-cell;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}

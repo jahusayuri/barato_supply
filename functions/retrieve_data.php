@@ -44,6 +44,12 @@ function get_stocks($conn){
 	return $conn->query($sql);
 }
 
+function get_stocks_id($conn,$id){
+	//Get stocks through id
+	$sql = "SELECT * FROM stocks WHERE id = $id";
+	return $conn->query($sql);
+}
+
 function get_user_details($conn){
 	//Get user details
 	$id = $_SESSION['id'];
