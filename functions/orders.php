@@ -91,9 +91,45 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 		}	
 }
 
+if(isset($_POST['cancel_order'])){
+
+}
+
+if(isset($_POST['change_order_status'])){
+	$id = $_POST['chosen_item'];
+	$user_id = $_POST['user_id'];
+	if($_POST['change_order_status'] == strtoupper('approve')){
+		$status = strtoupper('approved');
+		update_order_status($conn,$status,$id,$user_id);
+	}elseif($_POST['change_order_status'] == strtoupper('pack order')){
+		$status = strtoupper('packing order');
+		update_order_status($conn,$status,$id,$user_id);
+	}elseif($_POST['change_order_status'] == strtoupper('deliver order')){		
+		$status = strtoupper('delivering');
+		update_order_status($conn,$status,$id,$user_id);
+	}else{
+		echo "<script>alert('Package already delivered')</script>";
+	}
+}
+
+function update_order_status($conn,$status,$id,$user_id){
+	$sql = "UPDATE orders SET status='$status' WHERE order_details=$id AND ordered_by=$user_id";
+	return $conn->query($sql);
+}
+
 function update_remaining_stocks($conn,$quantity,$id){
 	$sql = "UPDATE stocks SET remaining=remaining-$quantity WHERE id=$id";
-	$result = $conn->query($sql);
+	return $conn->query($sql);
+}
+
+function update_stocks($conn,$id,$item_code,$item,$remaining,$price){
+	$sql = "UPDATE stocks SET item_code='$item_code', item='$item', remaining='$remaining', price='$price' WHERE id=$id";
+	return $conn->query($sql);
+}
+
+function add_stocks($conn,$item_code,$item,$remaining,$price){
+	$sql = "INSERT INTO stocks (id,item,item_code,remaining,price) VALUES (NULL,'$item','$item_code',$remaining,$price)";
+	return $conn->query($sql);
 }
 
 

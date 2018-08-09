@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../functions/check_credentials.php';
 include "../functions/orders.php";
 if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
@@ -32,6 +33,20 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 
 		}
 		echo "</div>";
+	}
+
+
+	//Update stocks
+	if(isset($_POST['update_stock'])){
+		$id = $_POST['chosen_item'];
+		$item_code = $_POST['item_code'];
+		$item = $_POST['item'];
+		$remaining = $_POST['remaining'];
+		$price = $_POST['price'];
+
+		//Pass to update_stocks
+		update_stocks($conn,$id,$item_code,$item,$remaining,$price);
+		header("Refresh: 1; url=admin_home.php");
 	}
 	?>
 </body>

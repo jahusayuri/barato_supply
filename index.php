@@ -6,7 +6,7 @@ include "assets/connection_profile.php";
 	<form action="functions/check_credentials.php" method="post">
 		Phone Number: <input type="text" name="p_number" required/><br/>
 		Password: <input type="password" name="password" required/><br/>
-		<input type="submit">
+		<input type="submit" value="Submit">
 	</form>
 
 	No account yet? <br/>
