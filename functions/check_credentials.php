@@ -57,12 +57,25 @@ function admin_login($conn, $username, $password){
 		$_SESSION['login_user'] = $username;
 		$_SESSION['id'] = $row['id'];
 		echo "Login Success! Redirecting...";
-		header("Refresh:5; url=../pages/home.php");
+		header("Refresh:5; url=../pages/admin_home.php");
 	}else{
 		echo "User does not exists. Password Incorrect";
 		//Destroy the failed session
 		session_destroy();
 		header("Refresh:3; url=../index.php");
+	}
+}
+
+function check_credentials($conn,$id){
+	$sql = "SELECT * FROM admin WHERE id=$id";
+	$result = $conn->query($sql);
+
+	//If admin exists
+	if($result->num_rows){
+		echo "Welcome!<br/>";
+	}else{
+		echo "You aren't an admin!<br/>";
+		header("Refresh: 3; url=../pages/home.php");
 	}
 }
 ?>

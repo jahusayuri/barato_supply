@@ -29,7 +29,7 @@ echo "<br/>Welcome ".$row['last_name'].", ".$row['first_name']."!<br/>";
 				echo "<div class='tr'><span></span><span class='th'>Item Code</span><span class='th'>Item</span><span class='th'>Stocks Available</span><span class='th'>Price</span><span class='th'>Quantity</span></div>";
 				while ($row = $result->fetch_assoc()) {						
 					echo "<form class='tr' method='post' action='#'>";
-					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>P".$row['price']."</span><span class='td'><input type='number' name='quantity' min='5' max='".$row['remaining']."' value='5' required/></span>";
+					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>P".$row['price']."</span><span class='td'><input type='number' name='quantity' min='0' max='".$row['remaining']."' value='1' required/></span>";
 					echo "<input type='submit' name='add_to_cart' value='Add to Cart' />  ";
 					echo "</form>";
 				}
@@ -45,12 +45,13 @@ echo "<br/>Welcome ".$row['last_name'].", ".$row['first_name']."!<br/>";
 			<?php
 			$total = 0;
 			$count = 0;
+			$total_quantity = 0;
 			$amount = array();
 				//Show shopping cart if it exists
 				if(isset($_SESSION['shopping_cart']) && !empty($_SESSION['shopping_cart'])){
 					$type = "";
 					foreach ($_SESSION['shopping_cart'] as $key => $value) {
-						echo "<form class='tr' method='post' action='#'>";
+						echo "<form class='tr' method='post' action=''>";
 						echo "<span class='td'><input type='hidden' name='chosen_item' value='".$value['chosen_item']."'></span><span class='td'>".$value['item_code']."</span><span class='td'>".$value['item']."</span><span class='td'>P".$value['price']."</span><span class='td'>".$value['quantity']."</span><span class='td'>P".number_format($value['quantity']*$value['price'], 2)."</span>";
 						echo "<input type='submit' name='delete_from_cart' value='Delete' />  ";
 						echo "</form>";
@@ -60,11 +61,12 @@ echo "<br/>Welcome ".$row['last_name'].", ".$row['first_name']."!<br/>";
 						//Get total price
 						$total = $total + ($value['quantity']*$value['price']);
 						//var_dump($amount);
+						//Get total quantity
+						$total_quantity = $total_quantity + $value['quantity'];
 					}				
 				}else{					
 					$type = "disabled";
 				}
-
 			?>			
 		</div>
 		<b>Total: </b>P<?php echo $total ?>
@@ -76,10 +78,25 @@ echo "<br/>Welcome ".$row['last_name'].", ".$row['first_name']."!<br/>";
 		//Assuming checkout has been clicked
 		if(isset($_POST['checkout'])){
 			echo "You clicked Checkout<br/>";
-			//Save array data into variable
-			$array_to_pass = $_SESSION['shopping_cart'];
-			//Call function to insert into database
-			$result	= insert_into_orders($conn,$_SESSION['id'],$array_to_pass,$amount);
+			//Check if cart is more than 5 (if 5 items)
+			$cart_count = count($_SESSION['shopping_cart']);
+			if($cart_count >= 4){				
+				//Save array data into variable
+				$array_to_pass = $_SESSION['shopping_cart'];
+				//Call function to insert into database
+				$result	= insert_into_orders($conn,$_SESSION['id'],$array_to_pass,$amount);
+			}else{
+				//If shopping cart is less than 5 but total items is equal to or greater than 5 still push
+				if($total_quantity >= 5) {
+					//Save array data into variable
+					$array_to_pass = $_SESSION['shopping_cart'];
+					//Call function to insert into database
+					$result	= insert_into_orders($conn,$_SESSION['id'],$array_to_pass,$amount);
+				}else{
+					echo "<script>alert('You need at least 5 items to check out')</script>";
+					header("Refresh: 0; url=place_orders.php");
+				}
+			}
 		}
 		?>
 

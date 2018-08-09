@@ -38,6 +38,10 @@ function get_orders($conn){
 	return $conn->query($sql);
 }
 
+function get_all_orders($conn){
+	$sql = "SELECT * FROM orders a, user b, stocks c WHERE a.ordered_by = b.id AND a.order_details = c.id ORDER BY a.id DESC";
+	return $conn->query($sql);
+}
 function get_stocks($conn){
 	//Get stocks
 	$sql = "SELECT * FROM stocks";
@@ -54,6 +58,14 @@ function get_user_details($conn){
 	//Get user details
 	$id = $_SESSION['id'];
 	$sql = "SELECT * FROM user WHERE id = $id";
+	return $conn->query($sql);
+
+}
+
+function get_admin_details($conn){
+	//Get user details
+	$id = $_SESSION['id'];
+	$sql = "SELECT * FROM admin WHERE id = $id";
 	return $conn->query($sql);
 
 }

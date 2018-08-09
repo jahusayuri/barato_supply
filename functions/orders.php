@@ -78,20 +78,23 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 		$count++;
 		
 		//Update the stocks
-		update_remaining_stocks($conn,$qty,$order_details);
-
+		update_remaining_stocks($conn,$qty,$order_details);	
+		}
 		//Check if successfully processed.
 		if ($result) {
 			echo "Successfully inserted<br/>";
-			header("Refresh: 3; url=../pages/home.php");
+			unset($_SESSION['shopping_cart']);
+			return 1;
 		}else{
 			echo "Error! Please contact IT.";
-		}
-	}
+			return 0;
+		}	
 }
 
 function update_remaining_stocks($conn,$quantity,$id){
 	$sql = "UPDATE stocks SET remaining=remaining-$quantity WHERE id=$id";
 	$result = $conn->query($sql);
 }
+
+
 ?>

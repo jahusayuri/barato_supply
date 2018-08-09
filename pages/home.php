@@ -37,9 +37,9 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 		//Check if user made orders
 		$result=get_orders($conn);
 		if($result->num_rows > 0){
-			echo "<table style='width:50%;text-align:center;'><tr><th>Item Code</th><th>Item</th><th>Quantity</th><th>Amount</th><th>Status</th></tr>";
+			echo "<table style='width:50%;text-align:center;'><tr><th>Item Code</th><th>Item</th><th>Quantity</th><th>Price</th><th>Amount</th><th>Status</th></tr>";
 			while ($row = $result->fetch_assoc()) {
-				echo "<tr><td>".$row['item_code']."</td><td>".$row['item']."</td><td>".$row['qty']."</td><td>".$row['amount']."</td><td>".$row['status']."</td></tr>";
+				echo "<tr><td>".$row['item_code']."</td><td>".$row['item']."</td><td>".$row['qty']."</td><td>P".$row['price']."</td><td>P".$row['amount']."</td><td>".$row['status']."</td></tr>";
 			}
 			echo "</table>";
 			
