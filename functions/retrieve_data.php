@@ -15,7 +15,7 @@ function get_address_through_id($id,$conn){
 	if ($result->num_rows > 0) {		
 		$row = $result->fetch_assoc();
 		if ($row['delivery_type'] == "SHIPPING") {
-			echo "<textarea rows='3' cols='40' name='input_address' form='user_signup' placeholder='ENTER ADDRESS...' required></textarea>";
+			echo "<textarea rows='3' cols='40' name='input_address' form='update_user' placeholder='ENTER ADDRESS...' required></textarea>";
 		}else{
 			echo $row['address_1']."<br/>".$row['address_2'];
 		}
@@ -39,7 +39,7 @@ function get_orders($conn){
 }
 
 function get_all_orders($conn){
-	$sql = "SELECT * FROM orders a, user b, stocks c WHERE a.ordered_by = b.id AND a.order_details = c.id ORDER BY a.id DESC";
+	$sql = "SELECT * FROM orders a, user b, stocks c, delivery_options d WHERE a.ordered_by = b.id AND a.order_details = c.id AND b.delivery_option = d.id ORDER BY a.id DESC";
 	return $conn->query($sql);
 }
 function get_stocks($conn){
@@ -57,7 +57,7 @@ function get_stocks_id($conn,$id){
 function get_user_details($conn){
 	//Get user details
 	$id = $_SESSION['id'];
-	$sql = "SELECT * FROM user WHERE id = $id";
+	$sql = "SELECT * FROM user a, delivery_options b WHERE a.delivery_option = b.id AND a.id = $id";
 	return $conn->query($sql);
 
 }

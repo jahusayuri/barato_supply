@@ -7,10 +7,17 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 
 $result=get_user_details($conn);
 $row= $result->fetch_assoc();
-echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
+echo "Welcome ".$row['last_name'].", ".$row['first_name']."<br/>";
+echo "Your delivery address is: " ;
+if(!empty($row['address_1'])){
+	echo $row['address_1'].": ".$row['address_2']."<br/>";
+}else{
+	echo $row['address']."<br/>";
+}
 ?>
 <html>
 <body>
+	<a href="./edit_info.php">Edit Delivery Info</a>
 	<!-- Top Part -->
 	<div align="center">
 		<?php

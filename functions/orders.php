@@ -91,8 +91,11 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 		}	
 }
 
-if(isset($_POST['cancel_order'])){
-
+if(isset($_POST['cancel_order'])){	
+	$id = $_POST['chosen_item'];
+	$user_id = $_POST['user_id'];
+	$status = strtoupper('cancelled');	
+	update_order_status($conn,$status,$id,$user_id);
 }
 
 if(isset($_POST['change_order_status'])){

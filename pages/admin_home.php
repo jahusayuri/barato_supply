@@ -27,11 +27,11 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 					echo "<input type='submit' name='edit_stock' value='Edit' />";
 					echo "</form>";
 				}
-				echo "</div>";
+				echo "</div>"; 
 			}
 		?>		
 		<form method="post" action="./add_stocks.php">
-			<input type="submit" name="add_stock" value="Add Stocks">
+			<input type="submit" name="add_stock" value="Add Item">
 		</form>
 	</div>
 	<hr/>
@@ -46,8 +46,10 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 				while ($row = $result->fetch_assoc()) {						
 					echo "<form class='tr' method='post' action='#'>";
 					echo "<input type='hidden' name='user_id' value='".$row['ordered_by']."'/>";
-					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['contact_number']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'><input type='text' name='quantity' value='".$row['qty']."'/></span><span class='td'>P".$row['price']."</span><span class='td'>P".$row['amount']."</span>";
-					echo "<input type='submit' name='cancel_order' value='Cancel' />";
+					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['contact_number']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['qty']."</span><span class='td'>P".$row['price']."</span><span class='td'>P".$row['amount']."</span>";
+					if($row['status'] != strtoupper('cancelled')){
+						echo "<input type='submit' name='cancel_order' value='Cancel' />";
+					}
 					if ($row['status'] == strtoupper('pending')) {						
 						echo "<input type='submit' name='change_order_status' value='APPROVE' />";
 					}elseif($row['status'] == strtoupper('approved')){
@@ -56,12 +58,17 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 						echo "<input type='submit' name='change_order_status' value='DELIVER ORDER' />";	
 					}elseif($row['status'] == strtoupper('delivering')){
 						echo "<input type='submit' name='change_order_status' value='DELIVERED' disabled/>";	
+					}else{
+						echo "<input type='submit' value='CANCELLED' disabled/>";
 					}
 					echo "</form>";
 				}
 				echo "</div>";
 			}
 		?>
+		<form method="post" action="./print_orders.php"> 
+			<input type="submit" name="print_orders" value="Print Orders">
+		</form>
 	</div>
 </body>
 </html>

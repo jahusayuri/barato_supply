@@ -26,7 +26,7 @@ include "../functions/retrieve_data.php";
 	<form id="user_signup" action="../functions/client_signup.php" method="post" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms and Conditions'); return false; }">
 		First Name: <input type="text" name="fname" placeholder="e.g. John" required/><br/>
 		Last Name: <input type="text" name="lname" placeholder="e.g. Doe" required/><br/>
-		Contact Number: <input type="text" name="pnumber" placeholder="e.g. 09xxxxxxxxx" required/><br/>
+		Contact Number: <input type="text" name="pnumber" placeholder="e.g. +639xxxxxxxxx" required/><br/>
 		Password: <input type="password" name="password" required/><br/>
 		Delivery Option: 
 		<select form="user_signup" name="delivery_option" onchange="getAddress(this.value)" required>

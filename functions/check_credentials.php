@@ -36,7 +36,7 @@ function user_login($conn, $pnumber, $password){
 		$_SESSION['login_user'] = $pnumber;		
 		$_SESSION['id'] = $row['id'];
 		echo "Login Success! Redirecting...";
-		header("Refresh:5; url=../pages/home.php");
+		header("Refresh:3; url=../pages/home.php");
 	}else{
 		echo "User does not exists. Password Incorrect";
 		//Destroy the failed session
@@ -57,7 +57,7 @@ function admin_login($conn, $username, $password){
 		$_SESSION['login_user'] = $username;
 		$_SESSION['id'] = $row['id'];
 		echo "Login Success! Redirecting...";
-		header("Refresh:5; url=../pages/admin_home.php");
+		header("Refresh:3; url=../pages/admin_home.php");
 	}else{
 		echo "User does not exists. Password Incorrect";
 		//Destroy the failed session

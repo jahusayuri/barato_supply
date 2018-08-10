@@ -49,6 +49,6 @@ function signup($conn,$pnumber, $fname, $lname, $delivery_option, $input_address
 	}else{
 		echo "Adding Failed. Please contact IT";
 	}
-	header('Refresh:5; url=../index.php');
+	header('Refresh:3; url=../index.php');
 }
 ?>
