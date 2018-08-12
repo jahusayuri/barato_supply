@@ -46,11 +46,9 @@ echo "Welcome ".$row['last_name'].", ".$row['first_name']."!";
 				while ($row = $result->fetch_assoc()) {						
 					echo "<form class='tr' method='post' action='#'>";
 					echo "<input type='hidden' name='user_id' value='".$row['ordered_by']."'/>";
-					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['contact_number']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['qty']."</span><span class='td'>P".$row['price']."</span><span class='td'>P".$row['amount']."</span>";
-					if($row['status'] != strtoupper('cancelled')){
-						echo "<input type='submit' name='cancel_order' value='Cancel' />";
-					}
-					if ($row['status'] == strtoupper('pending')) {						
+					echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['order_details']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['contact_number']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['qty']."</span><span class='td'>P".$row['price']."</span><span class='td'>P".$row['amount']."</span>";
+					if ($row['status'] == strtoupper('pending')) {								
+						echo "<input type='submit' name='cancel_order' value='Cancel' />";				
 						echo "<input type='submit' name='change_order_status' value='APPROVE' />";
 					}elseif($row['status'] == strtoupper('approved')){
 						echo "<input type='submit' name='change_order_status' value='PACK ORDER' />";

@@ -62,11 +62,11 @@ if(isset($_POST['delete_from_cart'])) {
 }
 
 function insert_into_orders($conn,$user_id,$data_array,$amount_array){
-	echo "User ID is: ".$user_id."<br/>";
+	/*echo "User ID is: ".$user_id."<br/>";
 	echo "<br/>Array data is: ";
 	var_dump($data_array);
 	echo "<br/>Amount is: ";
-	var_dump($amount_array);
+	var_dump($amount_array);*/
 	//Loop through the data
 	$count = 0;
 	foreach ($data_array as $key => $value) {
@@ -84,6 +84,7 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 		if ($result) {
 			echo "Successfully inserted<br/>";
 			unset($_SESSION['shopping_cart']);
+			echo "<script>location.href = '../pages/home.php';</script>";
 			return 1;
 		}else{
 			echo "Error! Please contact IT.";
