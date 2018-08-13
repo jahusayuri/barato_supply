@@ -15,7 +15,7 @@ function get_address_through_id($id,$conn){
 	if ($result->num_rows > 0) {		
 		$row = $result->fetch_assoc();
 		if ($row['delivery_type'] == "SHIPPING") {
-			echo "<textarea rows='3' cols='40' name='input_address' form='update_user' placeholder='ENTER ADDRESS...' required></textarea>";
+			echo "<textarea class='form-control' rows='3' cols='40' name='input_address' form='update_user' placeholder='ENTER ADDRESS...' required></textarea>";
 		}else{
 			echo $row['address_1']."<br/>".$row['address_2'];
 		}

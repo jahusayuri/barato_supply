@@ -97,6 +97,7 @@ if(isset($_POST['cancel_order'])){
 	$user_id = $_POST['user_id'];
 	$status = strtoupper('cancelled');	
 	update_order_status($conn,$status,$id,$user_id);
+	echo "<script>location.href='../pages/admin_home.php#pending_orders'</script>";
 }
 
 if(isset($_POST['change_order_status'])){
@@ -113,7 +114,8 @@ if(isset($_POST['change_order_status'])){
 		update_order_status($conn,$status,$id,$user_id);
 	}else{
 		echo "<script>alert('Package already delivered')</script>";
-	}
+	}	
+	echo "<script>location.href='../pages/admin_home.php#pending_orders'</script>";
 }
 
 function update_order_status($conn,$status,$id,$user_id){

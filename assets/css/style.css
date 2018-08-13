@@ -1227,7 +1227,7 @@
   display: block;
 }
 .text-primary {
-  color: #ff5821;
+  color: #000000;
 }
 .bg-primary {
   background-color: #ff5821;
@@ -1526,7 +1526,7 @@ h4 {
   font-weight: 100;
 }
 a {
-  color: #ff5821;
+  color: #000000;
 }
 a:hover {
   color: #ff5821;

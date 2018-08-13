@@ -10,7 +10,6 @@ if (isset($_POST['print_orders'])) {
 	$excel->writer->addRow(
 		array(
 			"Full Name",
-			"Contact Number",
 			"Item Code",
 			"Item",
 			"Quantity",
@@ -31,21 +30,23 @@ if (isset($_POST['print_orders'])) {
 		}else{
 			$address = $rows['address_1'].": ".$rows['address_2'];
 		}
-		//Place everything in an array
-		$to_push = array(
-			$full_name,
-			$rows['contact_number'],
-			$rows['item_code'],
-			$rows['item'],
-			$rows['qty'],
-			$rows['amount'],
-			$address,
-			$rows['status'],
-		);	
-		$excel->writer->addRow($to_push);		
+		//Checks if status is not cancelled so that it can be pushed into the array
+		if($rows['status'] != strtoupper('cancelled')){			
+			//Place everything in an array		
+			$to_push = array(
+				$full_name,
+				$rows['item_code'],
+				$rows['item'],
+				$rows['qty'],
+				$rows['amount'],
+				$address,
+				$rows['status'],
+			);	
+			$excel->writer->addRow($to_push);
+		}		
 	}	
 	$excel->writer->setDelimiter(","); 
-	$excel->writer->saveFile("test");
+	$excel->writer->saveFile("Orders");
 }
 ?>
 <html>
