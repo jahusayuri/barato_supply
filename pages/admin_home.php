@@ -103,7 +103,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 								}elseif($row['status'] == strtoupper('packing order')){
 									echo "<input class='btn btn-inverse btn-sm' type='submit' name='change_order_status' value='DELIVER ORDER' />";	
 								}elseif($row['status'] == strtoupper('delivering')){
-									echo "<input class='btn btn-success btn-sm' type='submit' name='change_order_status' value='DELIVERED' disabled/>";	
+									echo "<input class='btn btn-inverse btn-sm' type='submit' name='change_order_status' value='DELIVERED' disabled/>";	
 								}else{
 									echo "<input class='btn btn-danger btn-sm' type='submit' value='CANCELLED' disabled/>";
 								}

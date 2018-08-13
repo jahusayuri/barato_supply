@@ -11,6 +11,6 @@ if (ini_get("session.use_cookies")) {
 $_SESSION['id'] = null;
 $_SESSION['login_user'] = null;
 session_destroy();
-header("Refresh:2; url=../index.php");
+header("Refresh:0; url=../index.php");
 
 ?>
