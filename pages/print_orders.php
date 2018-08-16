@@ -9,13 +9,13 @@ if (isset($_POST['print_orders'])) {
 	//Set the headers
 	$excel->writer->addRow(
 		array(
-			"Full Name",
-			"Item Code",
-			"Item",
-			"Quantity",
-			"Amount",
-			"Address",
-			"Status",
+			"FULL NAME",
+			"ITEM CODE",
+			"ITEM",
+			"QUANTITY",
+			"AMOUNT",
+			"ADDRESS",
+			"STATUS",
 		)
 	);
 
@@ -44,9 +44,11 @@ if (isset($_POST['print_orders'])) {
 			);	
 			$excel->writer->addRow($to_push);
 		}		
-	}	
+	}
+	$date = new DateTime();
+    $filename = "ORDERS_".$date->format('Y-m-d');	
 	$excel->writer->setDelimiter(","); 
-	$excel->writer->saveFile("Orders");
+	$excel->writer->saveFile($filename);
 }
 ?>
 <html>

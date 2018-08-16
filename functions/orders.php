@@ -69,16 +69,31 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 	var_dump($amount_array);*/
 	//Loop through the data
 	$count = 0;
+	$result = 0;
 	foreach ($data_array as $key => $value) {
 		$order_details = $value['chosen_item'];
 		$qty = $value['quantity'];
 		$amount = $amount_array[$count];
-		$sql = "INSERT INTO orders (id,ordered_by,order_details,qty,amount,status) VALUES (NULL,'$user_id','$order_details','$qty','$amount','PENDING')";
-		$result = $conn->query($sql);
-		$count++;
-		
-		//Update the stocks
-		update_remaining_stocks($conn,$qty,$order_details);	
+
+		//Check if same order already exists
+		$check_order_sql = "SELECT id FROM orders WHERE ordered_by='$user_id' AND order_details='$order_details'";
+		//var_dump($conn->query($check_order_sql));
+		if($conn->query($check_order_sql)->num_rows > 0){
+			echo "<script>alert('YOUR ORDER FOR ".strtoupper($value['item'])." ALREADY EXISTS!');</script>";
+		}else{
+			//Check if stock is still available
+			$number_stock = $conn->query("SELECT * FROM stocks WHERE id = '$order_details'");
+			$row = $number_stock->fetch_assoc();
+			if($row['remaining'] < 0 ){
+				echo "<script>alert('SORRY BUT WE RAN OUT OF STOCK FOR ".strtoupper($row['item'])."')</script>";
+			}else{
+				$sql = "INSERT INTO orders (id,ordered_by,order_details,qty,amount,status) VALUES (NULL,'$user_id','$order_details','$qty','$amount','PENDING')";
+				$result = $conn->query($sql);				
+				//Update the stocks
+				update_remaining_stocks($conn,$qty,$order_details);	
+			}			
+		}		
+		$count++;		
 		}
 		//Check if successfully processed.
 		if ($result) {
@@ -87,7 +102,7 @@ function insert_into_orders($conn,$user_id,$data_array,$amount_array){
 			echo "<script>location.href = '../pages/home.php';</script>";
 			return 1;
 		}else{
-			echo "Error! Please contact IT.";
+			echo "<script>alert('PLEASE CONTACT BARATO SUPPLY CO TO REMOVE YOUR ORDER(S)')</script>";
 			return 0;
 		}	
 }
@@ -116,6 +131,46 @@ if(isset($_POST['change_order_status'])){
 		echo "<script>alert('Package already delivered')</script>";
 	}	
 	echo "<script>location.href='../pages/admin_home.php#pending_orders'</script>";
+}
+
+if(isset($_POST['clear_orders'])){
+	echo "<script>
+	if(confirm('Are you sure you want to clear orders?')){
+		location.href='../functions/orders.php?clear_orders=1';
+	}
+	</script>";
+}
+
+if(isset($_POST['clear_items'])){
+	echo "<script>
+	if(confirm('Are you sure you want to clear items?')){
+		location.href='../functions/orders.php?clear_items=1';
+	}
+	</script>";
+}
+
+if(isset($_GET['clear_items'])){
+	//Check if there are orders
+	if($conn->query("SELECT * FROM orders")->num_rows > 0){
+		echo "<script>alert('Please clear orders first!');</script>";
+	}else{
+		//Turn constraints OFF first
+		$conn->query("SET FOREIGN_KEY_CHECKS=0");
+		$sql = "TRUNCATE TABLE stocks";
+		$conn->query($sql);
+		echo "<script>alert('Successfully cleared items!');</script>";
+		//Turn constraints ON 
+		$conn->query("SET FOREIGN_KEY_CHECKS=1");
+	}	
+	echo "<script>location.href='../pages/admin_home.php';</script>";
+}
+
+if(isset($_GET['clear_orders'])){
+	$sql = "TRUNCATE TABLE orders";
+	if($conn->query($sql)){
+		echo "<script>alert('Successfully cleared orders!');</script>";
+	}
+	echo "<script>location.href='../pages/admin_home.php';</script>";
 }
 
 function update_order_status($conn,$status,$id,$user_id){

@@ -73,7 +73,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 							echo "<div class='tr'><span></span><span class='th'>Item Code</span><span class='th'>Item</span><span class='th'>Stocks Available</span><span class='th'>Price</span><span class='th'>Quantity</span></div>";
 							while ($row = $result->fetch_assoc()) {						
 								echo "<form class='tr' method='post' action='#'>";
-								echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>P".$row['price']."</span><span class='td'><input type='number' name='quantity' min='0' max='".$row['remaining']."' value='1' required/></span>";
+								echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['id']."'></span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>P".number_format($row['price'],2,'.','')."</span><span class='td'><input type='number' name='quantity' min='0' max='".$row['remaining']."' value='1' required/></span>";
 								echo "<input class='btn btn-inverse btn-sm form-control text-uppercase' type='submit' name='add_to_cart' value='Add to Cart' />  ";
 								echo "</form>";
 							}
@@ -97,11 +97,11 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 								$type = "";
 								foreach ($_SESSION['shopping_cart'] as $key => $value) {
 									echo "<form class='tr' method='post' action=''>";
-									echo "<span class='td'><input type='hidden' name='chosen_item' value='".$value['chosen_item']."'></span><span class='td'>".$value['item_code']."</span><span class='td'>".$value['item']."</span><span class='td'>P".$value['price']."</span><span class='td'>".$value['quantity']."</span><span class='td'>P".number_format($value['quantity']*$value['price'], 2)."</span>";
+									echo "<span class='td'><input type='hidden' name='chosen_item' value='".$value['chosen_item']."'></span><span class='td'>".$value['item_code']."</span><span class='td'>".$value['item']."</span><span class='td'>P".$value['price']."</span><span class='td'>".$value['quantity']."</span><span class='td'>P".number_format($value['quantity']*$value['price'],2,'.','')."</span>";
 									echo "<input class='btn btn-inverse btn-sm' type='submit' name='delete_from_cart' value='Delete' />  ";
 									echo "</form>";
 									//Get individual amount
-									$amount[$count] = number_format($value['quantity']*$value['price'], 2);
+									$amount[$count] = number_format($value['quantity']*$value['price'], 2, '.','');
 									$count++; //Increment count to traverse
 									//Get total price
 									$total = $total + ($value['quantity']*$value['price']);

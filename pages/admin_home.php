@@ -8,7 +8,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Admin Home - Barato Supply Code</title>
+  <title>Admin Home - Barato Supply Co</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -36,14 +36,14 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 						<?php
 							$result=get_admin_details($conn);
 							$row= $result->fetch_assoc();
-							echo "<h3 style='color:#ffffff;'> BARATO SUPPLY COMPANY </h3> <p style='color:#ffffff;' class='text-uppercase'>Welcome ".$row['last_name'].", ".$row['first_name']."!</p>";							
+							echo "<h3 style='color:#ffffff;'> BARATO SUPPLY CO </h3> <p style='color:#ffffff;' class='text-uppercase'>Welcome ".$row['last_name'].", ".$row['first_name']."!</p>";							
 						?>								
 					</div>
 				</div>		
 			</div>      					
 		</div>
 		<div align="center">			
-			<a class="btn btn-inverse btn-sm text-uppercase" href="logout.php" >Logout</a>				
+			<a class="btn btn-inverse btn-sm text-uppercase" href="logout.php" >Logout</a>			
 		</div>		
 	</div>
 	<div id="content">
@@ -73,7 +73,10 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 				<div align="center">
 					<form method="post" action="./add_stocks.php">
 						<input class='btn btn-inverse btn-block text-uppercase' type="submit" name="add_stock" value="ADD ITEM">
-					</form>							
+					</form>
+					<form method="post" action="">
+						<input class='btn btn-inverse btn-block text-uppercase' type="submit" name="clear_items" value="CLEAR ITEMS">
+					</form>								
 				</div>
 			</div>
 		</div>
@@ -94,7 +97,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 							while ($row = $result->fetch_assoc()) {						
 								echo "<form class='tr' method='post' action=''>";
 								echo "<input type='hidden' name='user_id' value='".$row['ordered_by']."'/>";
-								echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['order_details']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['qty']."</span><span class='td'>P".$row['price']."</span><span class='td'>P".$row['amount']."</span>";
+								echo "<span class='td'><input type='hidden' name='chosen_item' value='".$row['order_details']."'></span><span class='td'>".$row['last_name'].", ".$row['first_name']."</span><span class='td'>".$row['item_code']."</span><span class='td'>".$row['item']."</span><span class='td'>".$row['qty']."</span><span class='td'>P".$row['price']."</span><span class='td'>P".number_format($row['amount'],2,'.','')."</span>";
 								if ($row['status'] == strtoupper('pending')) {								
 									echo "<input class='btn btn-inverse btn-sm' type='submit' name='cancel_order' value='CANCEL ORDER' />";				
 									echo "<input class='btn btn-inverse btn-sm' type='submit' name='change_order_status' value='APPROVE' />";
@@ -116,7 +119,10 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 				<div align="center">						
 					<form method="post" action="./print_orders.php"> 
 						<input class="btn btn-inverse btn-block" type="submit" name="print_orders" value="PRINT ORDERS">
-					</form>					
+					</form>						
+					<form method="post" action=""> 
+						<input class="btn btn-inverse btn-block" type="submit" name="clear_orders" value="CLEAR ORDERS">
+					</form>						
 				</div>			
 			</div>
 		</div>

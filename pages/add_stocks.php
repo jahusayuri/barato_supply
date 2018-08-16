@@ -8,7 +8,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Add Item - Barato Supply Company</title>
+  <title>Add Item - Barato Supply Co</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -35,7 +35,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 	        			<?php
 							$result=get_admin_details($conn);
 							$row= $result->fetch_assoc();
-							echo "<h3 style='color:#ffffff;'> BARATO SUPPLY COMPANY </h3> <p style='color:#ffffff;' class='text-uppercase'>Welcome ".$row['last_name'].", ".$row['first_name']."!</p>";							
+							echo "<h3 style='color:#ffffff;'> BARATO SUPPLY CO</h3> <p style='color:#ffffff;' class='text-uppercase'>Welcome ".$row['last_name'].", ".$row['first_name']."!</p>";							
 						?>	
 	        		</div>
 	        	</div>

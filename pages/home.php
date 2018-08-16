@@ -8,7 +8,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 <html>
 <head>	
   <meta charset="utf-8">
-  <title>User Home - Barato Supply Company</title>
+  <title>User Home - Barato Supply Co</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -68,7 +68,7 @@ if(!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])){
 						echo "<div class='tr'><span class='th'>Item Code</span><span class='th'>Item</span><span class='th'>Stocks Available</span><span class='th'>Price</span></div>";
 						while ($row = $result->fetch_assoc()) {
 							echo "<div class='tr'>";
-							echo "<span class='td'>".$row['item_code']."</span ><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>".$row['price']."</span>";
+							echo "<span class='td'>".$row['item_code']."</span ><span class='td'>".$row['item']."</span><span class='td'>".$row['remaining']."</span><span class='td'>P".number_format($row['price'],2,'.','')."</span>";
 							echo "</div>";
 						}
 						echo "</div>";
